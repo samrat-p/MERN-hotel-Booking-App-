@@ -11,7 +11,7 @@ router.post(
     check("firstname", "First Name is required").isString(),
     check("lastname", "Last Name is required").isString(),
     check("email", "Email is required").isEmail(),
-    check("password", "Password is required").isLength({
+    check("password", "Password is more than 6 character is required").isLength({
       min: 6,
     }),
   ],
