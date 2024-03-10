@@ -1,4 +1,4 @@
-import express, { Request, Response, Router } from "express";
+import express, { Request, Response} from "express";
 import User from "../models/user";
 import jwt from "jsonwebtoken";
 import { check, validationResult } from "express-validator";
@@ -8,8 +8,8 @@ const router = express.Router();
 router.post(
   "/register",
   [
-    check("firstname", "First Name is required").isString(),
-    check("lastname", "Last Name is required").isString(),
+    check("firstName", "First Name is required").isString(),
+    check("lastName", "Last Name is required").isString(),
     check("email", "Email is required").isEmail(),
     check("password", "Password is more than 6 character is required").isLength({
       min: 6,
@@ -33,13 +33,13 @@ router.post(
       const token = jwt.sign(
         { userId: user.id },
         process.env.JWT_SECRET_KEY as string,
-        { expiresIn: "1d" }
+        { expiresIn: "7d" }
       );
 
       res.cookie("auth_token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: 846000000,
+        maxAge: 604800000,
       });
       return res.sendStatus(200);
     } catch (error) {
