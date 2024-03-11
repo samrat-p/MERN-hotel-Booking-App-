@@ -1,12 +1,15 @@
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import * as apiClient from '../api-client';
 
-type RegisterFormData = {
+export type RegisterFormData = {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
   confirmpassword: string;
 }; // the register form Schema...
+
 const Register = () => {
   const {
     register,
@@ -14,9 +17,24 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormData>(); // uses react register,watch nd form0-submit using react-hooks, the fromstate takes an object "errors" which will handel all the errors while validate and submitting the form
+
+
+const mutation = useMutation(apiClient.register, {
+  onSuccess : () => {
+    console.log("registration sucessful")
+  },
+  onError : (error: Error)=>{
+    console.log(error.message);
+  }
+})
+
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
-  }); // this function handels the submitfrom nd return if theres any error when submitting a form
+    mutation.mutate(data);
+  });
+  
+  // this function handels the submitfrom nd return if theres any error when submitting a form
+  
+  
   return (
     <form className="flex flex-col gap-5" onSubmit={onSubmit}>
       <h2 className="text-3xl font bold"> Create an Account</h2>
