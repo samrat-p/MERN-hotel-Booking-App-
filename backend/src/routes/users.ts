@@ -25,7 +25,7 @@ router.post(
         email: req.body.email,
       });
       if (user) {
-        return res.status(400).json({ message: "user already exist !!!" });
+        return res.status(400).json({ message: "USER ALREADY EXISTS !!!" });
       }
       user = new User(req.body);
       await user.save();
