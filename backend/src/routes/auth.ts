@@ -54,6 +54,7 @@ router.post(
 );
 router.get("/validate-token", verifyToken, (req: Request, res: Response)=>{
 res.status(200).send({userId: req.userId})
-}) //what this endpoint will do is-whatever we make a request to validate token endpoint, its gonna run some middleware(in our case verifyToken), its gonna check the cookie sent from frontend, if its passed its gonna execute the next function, which these do are if the cookie token is valid its send a 200 response, nd pass to the user the userid that added from the request
+});
+//what this endpoint will do is-whatever we make a request to validate token endpoint, its gonna run some middleware(in our case verifyToken), its gonna check the cookie sent from frontend, if its passed its gonna execute the next function, which these do are if the cookie token is valid its send a 200 response, nd pass to the user the userid that added from the request
 
 export default router;
