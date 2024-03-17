@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import {useMutation} from "react-query";
 import * as apiClient from '../api-client';
-import { useAppcontext } from "../contexts/AppContext";
+import { useAppContext } from "../contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 
 export type RegisterFormData = {
@@ -10,11 +10,11 @@ export type RegisterFormData = {
   email: string;
   password: string;
   confirmpassword: string;
-}; // the register form Schema...
+}; 
 
 const Register = () => {
   const navigate = useNavigate();
-  const {showToast} = useAppcontext();
+  const {showToast} = useAppContext();
   const {
     register,
     watch,
