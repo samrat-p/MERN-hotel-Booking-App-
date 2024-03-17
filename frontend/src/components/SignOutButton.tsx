@@ -1,24 +1,30 @@
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
 import { useAppContext } from "../contexts/AppContext";
 
 const SignOutButton = () => {
-    const{showToast} = useAppContext();
+  const queryClient = useQueryClient();
+  const { showToast } = useAppContext();
   const mutation = useMutation(apiClient.signOut, {
-    onSuccess: () => {
-        showToast({message: "Signed Out!", type:"SUCCESS"})
+    onSuccess: async() => {
+        await queryClient.invalidateQueries("validateToken")
+      showToast({ message: "Signed Out!", type: "SUCCESS" });
+      
       //showtoast
     },
-    onError: (error:Error) => {
-      showToast({message: error.message, type: "ERROR"})
+    onError: (error: Error) => {
+      showToast({ message: error.message, type: "ERROR" });
     },
   });
- 
-  const handelClick = () =>{
+
+  const handelClick = () => {
     mutation.mutate();
-  }
+  };
   return (
-    <button onClick={handelClick} className="text-blue-600 px-3 font-bold bg-white hover:bg:gray=100">
+    <button
+      onClick={handelClick}
+      className="text-blue-600 px-3 font-bold bg-white hover:bg:gray=100"
+    >
       Sign Out
     </button>
   );
