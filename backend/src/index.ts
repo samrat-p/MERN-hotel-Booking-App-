@@ -24,7 +24,7 @@ app.use(
     credentials: true,
   }) 
 );
-//backend didnt allow the request come form our frontend, adds httponly cookie, can be only accesed by the server, whatever we write code on the browser, we can not access the cookie from the browser, which is pretty secure.
+
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 
