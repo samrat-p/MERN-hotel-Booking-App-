@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
 import { useAppContext } from "../contexts/AppContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export type SignInFormData = {
   email: string;
@@ -10,9 +10,9 @@ export type SignInFormData = {
 };
 
 const SignIn = () => {
-const {showToast} = useAppContext();
-const navigate = useNavigate();
-const queryClient = useQueryClient();
+  const { showToast } = useAppContext();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const {
     register,
     formState: { errors },
@@ -21,9 +21,9 @@ const queryClient = useQueryClient();
 
   const mutation = useMutation(apiClient.signIn, {
     onSuccess: async () => {
-        showToast({message: "Sign in Successful!" , type: "SUCCESS"});
-        await queryClient.invalidateQueries("validateToken")
-        navigate("/")
+      showToast({ message: "Sign in Successful!", type: "SUCCESS" });
+      await queryClient.invalidateQueries("validateToken");
+      navigate("/");
       console.log("user has been signed in");
 
       // show the toase
@@ -31,7 +31,7 @@ const queryClient = useQueryClient();
     },
     onError: (error: Error) => {
       //show the toast
-      showToast({message: error.message, type: "ERROR"})
+      showToast({ message: error.message, type: "ERROR" });
     },
   });
 
@@ -73,12 +73,15 @@ const queryClient = useQueryClient();
           </span>
         )}
       </label>
-      <span>
+      <span className="flex items-center justify-between">
+        <span className="text-sm">
+          Not Registered ? <Link className="underline" to = "/register">Create an account here</Link>
+        </span>
         <button
           type="submit"
           className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 flex items-center space-x-2"
         >
-          Log In{" "}
+          Login{" "}
         </button>
       </span>
     </form>
