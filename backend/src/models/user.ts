@@ -21,7 +21,7 @@ userSchema.pre("save", async function (next) {
     this.password = await bcrypt.hash(this.password, 8);
   }
   next();
-});
+}); //hashing the encrypted password
 
 const User = mongoose.model<UserType>("User", userSchema);
 
