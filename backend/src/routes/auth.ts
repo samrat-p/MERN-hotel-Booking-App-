@@ -3,7 +3,7 @@ import { check, validationResult } from "express-validator";
 import User from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import verifyToken from "../middleware/auth";
+import verifyToken from "../middleware/auth"; //importing the middleware endpoint
 
 const router = express.Router();
 
@@ -37,15 +37,13 @@ router.post(
       const token = jwt.sign(
         { userId: user.id },
         process.env.JWT_SECRET_KEY as string,
-        {
-          expiresIn: "1d",
-        }
+        { expiresIn: "1d" }
       );
 
       res.cookie("auth_token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: 86400000,
+        maxAge: 31104000000,
       });
       res.status(200).json({ userId: user._id });
     } catch (error) {
@@ -54,16 +52,9 @@ router.post(
     }
   }
 );
-
-router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
-  res.status(200).send({ userId: req.userId });
+router.get("/validate-token", verifyToken, (req: Request, res: Response)=>{
+res.status(200).send({userId: req.userId})
 });
-
-router.post("/logout", (req: Request, res: Response) => {
-  res.cookie("auth_token", "", {
-    expires: new Date(0),
-  });
-  res.send();
-});
+//what this endpoint will do is-whatever we make a request to validate token endpoint, its gonna run some middleware(in our case verifyToken), its gonna check the cookie sent from frontend, if its passed its gonna execute the next function, which these do are if the cookie token is valid its send a 200 response, nd pass to the user the userid that added from the request
 
 export default router;
