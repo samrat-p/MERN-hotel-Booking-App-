@@ -77,6 +77,17 @@ const DetalisSection = () => {
       </label>
       <label className="text-gray-700 text-sm font-bold max-w-[50%]">
         Star Rating
+        <select
+          {...register("starRating", { required: "This field is required" })}
+          className="border rounded w-full p-2 text-gray-700 font-normal "
+        >
+          <option value="" className="text-sm font-bold">
+            Select as Rating
+          </option>
+          {[1, 2, 3, 4, 5].map((num) => (
+            <option value={num}>{num}</option>
+          ))}
+        </select>
         {errors.starRating && (
           <span className="text-red-500 text-bold">
             {errors.starRating.message}
