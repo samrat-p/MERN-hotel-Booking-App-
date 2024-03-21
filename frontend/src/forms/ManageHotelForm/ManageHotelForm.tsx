@@ -11,6 +11,7 @@ export type HotelFormData = {
   facilities: string[];
   imageFiles: FileList; //filelist rathar than array of strings
   adultCount: number;
+  starRating:number;
   childCount: number;
 };
 const ManageHotelForm = () => {
