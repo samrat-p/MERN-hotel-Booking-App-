@@ -87,8 +87,8 @@ const DetalisSection = () => {
           <option value="" className="text-sm font-bold">
 
           </option>
-          {['INR', 'USD', 'AED', 'JYP', 'EUR'].map((num) => (
-            <option value={num}>{num}</option>
+          {['INR', 'USD', 'AED', 'JYP', 'EUR'].map((type) => (
+            <option value={type}>{type}</option>
           ))}
         </select>
         {errors.currency && (
