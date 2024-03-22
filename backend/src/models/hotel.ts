@@ -16,6 +16,7 @@ export type HotelType = {
   starRating: number;
   imageUrls: string[];
   lastUpdated: Date;
+  currency: string[]; //add currency with price per night
 }; //hotel registration schema
 
 const hotelSchema = new mongoose.Schema<HotelType>({
@@ -32,6 +33,7 @@ const hotelSchema = new mongoose.Schema<HotelType>({
   starRating: { type: Number, required: true, min: 1, max: 5 },
   imageUrls: [{ type: String, required: true }],
   lastUpdated: { type: Date, required: true },
+  currency:[{type: String , required: true, enum:['INR', 'USD', 'AED', 'JYP', 'EUR',]}], //CURRENCY TYPES
 }); //hotel registration schema for mongodb
 
 const Hotel = mongoose.model<HotelType>("Hotel", hotelSchema);

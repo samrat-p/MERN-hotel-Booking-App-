@@ -61,20 +61,44 @@ const DetalisSection = () => {
           </span>
         )}
       </label>
-      <label className="text-gray-700 text-sm font-bold max-w-[50%]">
-        Price Per Night
-        <input
-          type="number"
-          min={1}
-          className="border rounded w-full py-1 px-2 font-normal"
-          {...register("pricePerNight", { required: "This field is required" })}
-        ></input>
-        {errors.pricePerNight && (
+      <div className="flex gap-5">
+        <label className="text-gray-700 text-sm font-bold max-w-[50%]">
+          Price Per Night
+          <input
+            type="number"
+            min={1}
+            className="border rounded w-full py-1 px-2 font-normal"
+            {...register("pricePerNight", {
+              required: "This field is required",
+            })}
+          ></input>
+          {errors.pricePerNight && (
+            <span className="text-red-500 text-bold">
+              {errors.pricePerNight.message}
+            </span>
+          )}
+        </label>
+        <label className="text-gray-700 text-sm font-bold max-w-[8%]">
+        Currency
+        <select
+          {...register("currency", { required: "This field is required" })}
+          className="border rounded w-full p-1 text-gray-700 font-normal "
+        >
+          <option value="" className="text-sm font-bold">
+
+          </option>
+          {['INR', 'USD', 'AED', 'JYP', 'EUR'].map((num) => (
+            <option value={num}>{num}</option>
+          ))}
+        </select>
+        {errors.currency && (
           <span className="text-red-500 text-bold">
-            {errors.pricePerNight.message}
+            {errors.currency.message}
           </span>
         )}
       </label>
+      </div>
+
       <label className="text-gray-700 text-sm font-bold max-w-[50%]">
         Star Rating
         <select

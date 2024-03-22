@@ -14,6 +14,7 @@ export type HotelFormData = {
   adultCount: number;
   starRating:number;
   childCount: number;
+  currency: string[]; //add currency with pricepermonth
 };
 const ManageHotelForm = () => {
   const formMethods = useForm<HotelFormData>();
