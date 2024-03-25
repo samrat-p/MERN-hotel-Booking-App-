@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
 import multer from "multer";
-import { buffer } from "stream/consumers";
+
 import cloudinary from "cloudinary";
-import { error } from "console";
+
 import Hotel, { HotelType } from "../models/hotel";
 import verifyToken from "../middleware/auth";
 import { body } from "express-validator";
@@ -66,4 +66,4 @@ router.post(
   }
 );
 
-export default router
+export default router;
