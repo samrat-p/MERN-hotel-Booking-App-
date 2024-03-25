@@ -33,13 +33,13 @@ router.post(
       const token = jwt.sign(
         { userId: user.id },
         process.env.JWT_SECRET_KEY as string,
-        { expiresIn: "360d" }
+        { expiresIn: "1d" }
       );
 
       res.cookie("auth_token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: 31104000000,
+        maxAge: 86400000,
       });  //jwt expiry 
       return res.status(200).send({message:"User registered OK"});
     } catch (error) {
