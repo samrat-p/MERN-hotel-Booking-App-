@@ -78,25 +78,6 @@ const DetalisSection = () => {
             </span>
           )}
         </label>
-        <label className="text-gray-700 text-sm font-bold max-w-[8%]">
-        Currency
-        <select
-          {...register("currency", { required: "This field is required" })}
-          className="border rounded w-full p-1 text-gray-700 font-normal "
-        >
-          <option value="" className="text-sm font-bold">
-
-          </option>
-          {['INR', 'USD', 'AED', 'JYP', 'EUR'].map((type) => (
-            <option value={type}>{type}</option>
-          ))}
-        </select>
-        {errors.currency && (
-          <span className="text-red-500 text-bold">
-            {errors.currency.message}
-          </span>
-        )}
-      </label>
       </div>
 
       <label className="text-gray-700 text-sm font-bold max-w-[50%]">
