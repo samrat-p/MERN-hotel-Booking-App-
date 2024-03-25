@@ -10,7 +10,7 @@ const Footer = () => {
           <p className="cursor-pointer">Privacy Polic</p>
           <p className="cursor-pointer">Terms of Service</p>
         </span>
-      </div>
+      </div
     </div>
   );
 };
