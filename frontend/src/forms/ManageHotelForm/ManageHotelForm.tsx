@@ -19,12 +19,40 @@ export type HotelFormData = {
   childCount: number;
   currency: string[]; //add currency with pricepermonth
 };
-const ManageHotelForm = () => {
+
+type Props = {
+  onSave: (hotelFormData: FormData)=> void
+  isLoading: boolean;
+}
+const ManageHotelForm = ({onSave, isLoading}: Props) => {
   const formMethods = useForm<HotelFormData>();
   const {handleSubmit} = formMethods;
-  const onSubmit = handleSubmit((formData:HotelFormData)=>{
+  const onSubmit = handleSubmit((formDataJson:HotelFormData)=>{
     //create new formdata object & call our api
-    console.log(formData);
+    const formData = new FormData();
+    formData.append("name",formDataJson.name)
+    formData.append("city",formDataJson.city)
+    formData.append("country",formDataJson.country)
+    formData.append("description",formDataJson.description)
+    formData.append("type",formDataJson.type)
+    formData.append("pricePerNight",formDataJson.pricePerNight.toString())
+    formData.append("adultCount",formDataJson.adultCount.toString())
+    formData.append("childCount",formDataJson.childCount.toString())
+    formData.append("starRating",formDataJson.starRating.toString())
+
+    formDataJson.facilities.forEach((facility,index)=>{
+      formData.append(`facilities[${index}]`, facility)
+    }); //u can choose any of the facilities, whats y we need to write a function, where foreach will iterate through every indexes of facilities and append the selected indexes in Json format
+    //formDataJson.currency.forEach((currency,index)=>{
+      //formData.append(`currency[${index}]`, currency)
+    //})
+
+    Array.from(formDataJson.imageFiles).forEach((imageFile)=>{
+        formData.append(`imageFiles`, imageFile)
+    }) //we have multar for take the indexs of these images // dont need to write a callback function for this
+onSave(formData)
+console.log(formData);
+
 
   })
   return (
@@ -36,7 +64,10 @@ const ManageHotelForm = () => {
         <GuestsSection/>
         <ImageSection/>
         <span className="flex justify-end">
-          <button type="submit" className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl">Save</button>
+          <button 
+          disabled={isLoading}
+          type="submit" className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl disabled: bg-grey-500">
+            {isLoading? "Saving...": "Save"}</button>
         </span>
       </form>
     </FormProvider>
