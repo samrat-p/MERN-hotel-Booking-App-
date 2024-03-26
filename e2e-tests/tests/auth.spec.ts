@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const UI_URL = "http://127.0.0.1:5173/";
+const UI_URL = "http://localhost:5173/";
 
 test("should allow the user to sign in", async ({ page }) => {
   await page.goto(UI_URL); //gets the frontend page
