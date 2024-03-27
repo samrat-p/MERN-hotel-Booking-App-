@@ -66,3 +66,13 @@ export const addMyHotel =async (hotelFormData: FormData)=>{
   }
   return response.json();
 };
+
+export const fetchMyHotels = async () => {
+    const response = await fetch(`${API_BASE_URL}/api/my-hotels`,{
+      credentials: "include"
+    })
+    if(!response.ok){
+      throw new Error("Error Fetching hotels ")
+    }
+    return response.json()
+} //fetch request for saved hotel api endpoint
