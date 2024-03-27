@@ -36,6 +36,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/my-hotels", myHotelRoutes)
 
+
 //app.get("/api/test", async (req: Request, res: Response) => {
 //res.json({ message: " well i did the testing thing correctly" });
 //}); .. testing the api (if it is running correctly or not)
