@@ -75,4 +75,4 @@ export const fetchMyHotels = async () => {
       throw new Error("Error Fetching hotels ")
     }
     return response.json()
-} //fetch request for saved hotel api endpoint
+} //fetch request for saved hotel api endpoint//
