@@ -23,4 +23,4 @@ const AddHotel = () => {
 }
 
 
-export default AddHotel
+export default AddHotel;
