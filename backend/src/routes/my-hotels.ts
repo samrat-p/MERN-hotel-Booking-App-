@@ -74,4 +74,20 @@ router.get("/", verifyToken, async (req: Request, res: Response) => {
   }
 }); //api endpoint for saved hotels
 
+router.get("/:id", verifyToken, async(req: Request ,res:Response)=>{
+  //api/my-hotels/8541277777
+  const id = req.params.id.toString()
+  try{
+    const hotel = await Hotel.find({
+      _id: id,
+      userId: req.userId
+    })
+    res.json(hotel);
+  }catch (error){
+    res.status(500).json({message: "Error fetching Hotels"})
+  }
+}) // backend endpoint api to call the added hotels for editing perpose edithotel.tsx
+
+
+
 export default router;
