@@ -77,3 +77,13 @@ export const fetchMyHotels = async ():Promise<HotelType[]> => {
     }
     return response.json()
 } //fetch request for saved hotel api endpoint//
+
+export const fetchMyHotelsById = async(hotelId: string): Promise<HotelType>=>{
+    const response = await fetch (`${API_BASE_URL}/api/my-hotels/${hotelId}`,{
+      credentials: "include"
+    })
+    if(!response.ok){
+      throw new Error("Error Fetching Hotels")
+    }
+    return response.json()
+} // fetch api for added hotels for ediiting edithotel.tsx
