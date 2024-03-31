@@ -78,7 +78,7 @@ router.get("/:id", verifyToken, async(req: Request ,res:Response)=>{
   //api/my-hotels/8541277777
   const id = req.params.id.toString()
   try{
-    const hotel = await Hotel.find({
+    const hotel = await Hotel.findOne({
       _id: id,
       userId: req.userId
     })
