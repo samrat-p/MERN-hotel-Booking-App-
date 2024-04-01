@@ -12,6 +12,6 @@ const EditHotel = () => {
       };
   });
 
-  return <ManageHotelForm hotel={hotel}/>
+  return <ManageHotelForm hotel ={hotel}/>
 };
  export default EditHotel;
