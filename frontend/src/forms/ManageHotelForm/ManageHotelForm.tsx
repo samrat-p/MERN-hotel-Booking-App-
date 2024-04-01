@@ -16,6 +16,7 @@ export type HotelFormData = {
   pricePerNight: number;
   facilities: string[];
   imageFiles: FileList; //filelist rathar than array of strings
+  imageUrls: string[];
   adultCount: number;
   starRating: number;
   childCount: number;
@@ -23,11 +24,11 @@ export type HotelFormData = {
 };
 
 type Props = {
-  hotel: HotelType;
+  hotel?: HotelType;
   onSave: (hotelFormData: FormData) => void;
   isLoading: boolean;
 };
-const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
+const ManageHotelForm = ({onSave,isLoading,hotel }: Props) => {
   const formMethods = useForm<HotelFormData>();
   const { handleSubmit, reset } = formMethods;
 
