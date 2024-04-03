@@ -20,7 +20,6 @@ export type HotelFormData = {
   adultCount: number;
   starRating: number;
   childCount: number;
-  currency: string[]; //add currency with pricepermonth
 };
 
 type Props = {
@@ -28,7 +27,8 @@ type Props = {
   onSave: (hotelFormData: FormData) => void;
   isLoading: boolean;
 };
-const ManageHotelForm = ({onSave,isLoading,hotel }: Props) => {
+
+const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
   const formMethods = useForm<HotelFormData>();
   const { handleSubmit, reset } = formMethods;
 
@@ -52,9 +52,6 @@ const ManageHotelForm = ({onSave,isLoading,hotel }: Props) => {
     formDataJson.facilities.forEach((facility, index) => {
       formData.append(`facilities[${index}]`, facility);
     }); //u can choose any of the facilities, whats y we need to write a function, where foreach will iterate through every indexes of facilities and append the selected indexes in Json format
-    //formDataJson.currency.forEach((currency,index)=>{
-    //formData.append(`currency[${index}]`, currency)
-    //})
 
     Array.from(formDataJson.imageFiles).forEach((imageFile) => {
       formData.append(`imageFiles`, imageFile);
