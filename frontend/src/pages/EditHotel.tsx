@@ -9,7 +9,7 @@ const EditHotel = () => {
     apiClient.fetchMyHotelById(hotelId || ''),
       {
         enabled: !!hotelId, //execute only when has a valid hotelid, !! defines as check for a trophy value
-      };
+      }
   });
 
   return <ManageHotelForm hotel ={hotel}/>
