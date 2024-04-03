@@ -13,5 +13,4 @@ export type HotelType = {
     starRating: number;
     imageUrls: string[];
     lastUpdated: Date;
-    currency: string[]; //add currency with price per night
   }; //hotel registration schema
