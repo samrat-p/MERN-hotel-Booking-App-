@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import * as apiClient from "../api-client";
 import ManageHotelForm from "../forms/ManageHotelForm/ManageHotelForm";
@@ -11,7 +11,14 @@ const EditHotel = () => {
         enabled: !!hotelId, //execute only when has a valid hotelid, !! defines as check for a trophy value
       }
   });
+  const {mutate, isLoading} = useMutation(apiClient.updateMyHotelById, {
+    onSuccess: ()=>{},
+    onError : ()=>{}
+  })
 
-  return <ManageHotelForm hotel ={hotel}/>
+  const handelSave = (hotelFormData: FormData) => {
+    mutate(hotelFormData) //functuon for handelsave button
+  }
+  return <ManageHotelForm hotel = {hotel} onSave={handelSave} isLoading={isLoading}/>
 };
  export default EditHotel;
