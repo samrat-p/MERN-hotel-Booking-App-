@@ -1,9 +1,9 @@
 import { FormProvider, useForm } from "react-hook-form";
-import DetalisSection from "./DetalisSection";
+import DetailsSection from "./DetailsSection";
 import TypeSection from "./TypeSection";
 import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestsSection";
-import ImageSection from "./ImagesSection";
+import ImagesSection from "./ImagesSection";
 import { HotelType } from "../../../../backend/src/shared/types";
 import { useEffect } from "react";
 
@@ -14,11 +14,11 @@ export type HotelFormData = {
   description: string;
   type: string;
   pricePerNight: number;
+  starRating: number;
   facilities: string[];
-  imageFiles: FileList; //filelist rathar than array of strings
+  imageFiles: FileList;
   imageUrls: string[];
   adultCount: number;
-  starRating: number;
   childCount: number;
 };
 
@@ -34,44 +34,53 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
 
   useEffect(() => {
     reset(hotel);
-  }, [hotel, reset]); //reset the form anytimes when a hotel changes
+  }, [hotel, reset]);
 
   const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
-    //create new formdata object & call our api
     const formData = new FormData();
+    if (hotel) {
+      formData.append("hotelId", hotel._id);
+    }
     formData.append("name", formDataJson.name);
     formData.append("city", formDataJson.city);
     formData.append("country", formDataJson.country);
     formData.append("description", formDataJson.description);
     formData.append("type", formDataJson.type);
     formData.append("pricePerNight", formDataJson.pricePerNight.toString());
+    formData.append("starRating", formDataJson.starRating.toString());
     formData.append("adultCount", formDataJson.adultCount.toString());
     formData.append("childCount", formDataJson.childCount.toString());
-    formData.append("starRating", formDataJson.starRating.toString());
 
     formDataJson.facilities.forEach((facility, index) => {
       formData.append(`facilities[${index}]`, facility);
-    }); //u can choose any of the facilities, whats y we need to write a function, where foreach will iterate through every indexes of facilities and append the selected indexes in Json format
+    });
+
+    if (formDataJson.imageUrls) {
+      formDataJson.imageUrls.forEach((url, index) => {
+        formData.append(`imageUrls[${index}]`, url);
+      });
+    }
 
     Array.from(formDataJson.imageFiles).forEach((imageFile) => {
       formData.append(`imageFiles`, imageFile);
-    }); //we have multar for take the indexs of these images // dont need to write a callback function for this
+    });
+
     onSave(formData);
-    console.log(formData);
   });
+
   return (
     <FormProvider {...formMethods}>
       <form className="flex flex-col gap-10" onSubmit={onSubmit}>
-        <DetalisSection />
+        <DetailsSection />
         <TypeSection />
         <FacilitiesSection />
         <GuestsSection />
-        <ImageSection />
+        <ImagesSection />
         <span className="flex justify-end">
           <button
             disabled={isLoading}
             type="submit"
-            className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl disabled: bg-grey-500"
+            className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl disabled:bg-gray-500"
           >
             {isLoading ? "Saving..." : "Save"}
           </button>
