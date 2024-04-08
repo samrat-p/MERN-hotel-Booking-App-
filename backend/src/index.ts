@@ -1,4 +1,4 @@
-import express, {Request, Response} from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
@@ -6,20 +6,19 @@ import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
 import cookieParser from "cookie-parser";
 import path from "path";
-import {v2 as cloudinary} from 'cloudinary';
-import myHotelRoutes from "./routes/my-hotels"
+import { v2 as cloudinary } from "cloudinary";
+import myHotelRoutes from "./routes/my-hotels";
+import hotelRoutes from "./routes/hotels";
 
 cloudinary.config({
-  cloud_name:process.env.CLOUDINARY_CLOUD_NAME, 
-  api_key:process.env.CLOUDINARY_API_KEY,
-  api_secret:process.env.CLOUDINARY_API_SECRET,
-})
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string)
-//.then(() => 
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
+//.then(() =>
 //console.log("connected to database: ", process.env.MONGODB_CONNECTION_STRING)); //**in console log it exposes ur mongodb url with password
-
-
 
 const app = express();
 app.use(cookieParser());
@@ -34,8 +33,8 @@ app.use(
 app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/my-hotels", myHotelRoutes)
-
+app.use("/api/my-hotels", myHotelRoutes); //deals with logged in user manage their own hotels
+app.use("/api/hotels", hotelRoutes); //deals with endpoint for visitor to search , view hotels ...like that !
 
 //app.get("/api/test", async (req: Request, res: Response) => {
 //res.json({ message: " well i did the testing thing correctly" });
