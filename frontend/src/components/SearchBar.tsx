@@ -12,7 +12,7 @@ const SearchBar = () => {
   const [adultCount, setAdultCount] = useState<number>(search.adultCount);
   const [childCount, setChildCount] = useState<number>(search.childCount);
 
-  const handelSubmit = (event: FormEvent) => {
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     search.saveSearchValues(
       destination,
@@ -27,7 +27,7 @@ const SearchBar = () => {
   maxDate.setFullYear(maxDate.getFullYear() + 1);
   return (
     <form
-      onSubmit={handelSubmit}
+      onSubmit={handleSubmit}
       className="-mt-8 p-3 bg-blue-400 rounded shadow-md grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 items-center gap-4"
     >
       <div className="flex flex-row items-center flex-1 bg-white p-2">
@@ -52,7 +52,7 @@ const SearchBar = () => {
           />
         </label>
         <label className="items-center flex">
-          Childs:
+          Children:
           <input
             className="w-full p-1 focus:outline-none font-bold"
             type="number"
@@ -63,7 +63,7 @@ const SearchBar = () => {
           />
         </label>
       </div>
-      <div className="div">
+      <div>
         <DatePicker
           selected={checkIn}
           onChange={(date) => setCheckIn(date as Date)}
@@ -77,7 +77,7 @@ const SearchBar = () => {
           wrapperClassName="min-w-full"
         />
       </div>
-      <div className="div">
+      <div>
         <DatePicker
           selected={checkOut}
           onChange={(date) => setCheckOut(date as Date)}
@@ -93,10 +93,14 @@ const SearchBar = () => {
       </div>
 
       <div className="flex gap-1">
-        <button className="w-2/3 bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-500"> Search</button>
-      </div>
-      <div className="flex gap-1">
-        <button className="w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500"> Clear</button>
+        <button className="w-2/3 bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-500">
+          {" "}
+          Search
+        </button>
+        <button className="w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500">
+          {" "}
+          Clear
+        </button>
       </div>
     </form>
   );
