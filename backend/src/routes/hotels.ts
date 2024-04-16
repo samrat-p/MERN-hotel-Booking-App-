@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, query } from "express";
 import Hotel from "../models/hotel";
 import { HotelSearchResponse } from "../shared/types";
 
@@ -6,14 +6,15 @@ const router = express.Router();
 // /api/hotels/search?
 router.get("/search", async (req: Request, res: Response) => {
   try {
-    const pageSize = 5; //pagenumber
-    const pageNumber = parseInt(req.query.page ? req.query.toString() : "1");
-    //if we have a page query it will convert to string then to int, if we dont have any it will just use default value 1.
+    const pageSize = 5;
+    const pageNumber = parseInt(
+      req.query.page ? req.query.page.toString() : "1"
+    );
     const skip = (pageNumber - 1) * pageSize;
 
     const hotels = await Hotel.find().skip(skip).limit(pageSize);
     const total = await Hotel.countDocuments();
-    const response : HotelSearchResponse = {
+    const response: HotelSearchResponse = {
       data: hotels,
       pagination: {
         total,
@@ -28,6 +29,5 @@ router.get("/search", async (req: Request, res: Response) => {
     res.json(500).json({ message: "something went wrong" });
   }
 });
-
 
 export default router;
