@@ -1,7 +1,7 @@
 import express, { Request, Response, query } from "express";
 import Hotel from "../models/hotel";
 import { HotelSearchResponse } from "../shared/types";
-import { parse } from "path";
+
 
 const router = express.Router();
 // /api/hotels/search?
