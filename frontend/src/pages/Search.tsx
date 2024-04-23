@@ -5,11 +5,14 @@ import { useState } from "react";
 import SearchResultsCard from "../components/SearchResultsCard";
 import Pagination from "../components/Pagination";
 import StarRatingFilter from "../components/StarRatingFilter";
+import HotelTypesFilter from "../components/HotelTypesFilter";
 
 const Search = () => {
   const search = useSearchContext();
   const [page, setPage] = useState<number>(1);
-  const [selectedStars, setSelectedStars] = useState<string[]>([])
+  const [selectedStars, setSelectedStars] = useState<string[]>([]);
+  const [selectedHotelTypes, setSelectedHotelsTypes] = useState<string[]>([]);
+
   const searchParams = {
     destination: search.destination,
     checkIn: search.checkIn.toISOString(),
@@ -18,21 +21,30 @@ const Search = () => {
     childCount: search.childCount.toString(),
     page: page.toString(),
     stars: selectedStars,
+    types: selectedHotelTypes,
   };
   const { data: hotelData } = useQuery(["searchHotels", searchParams], () =>
     apiClient.searchHotels(searchParams)
   );
 
-  const handelStarChange= (event: React.ChangeEvent<HTMLInputElement>)=> {
+  const handelStarsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const starRating = event.target.value;
-
-    setSelectedStars((prevStars)=>
+    setSelectedStars((prevStars) =>
       event.target.checked
-    ? [...prevStars, starRating]
-    : prevStars.filter((star)=> star !== starRating)
+        ? [...prevStars, starRating]
+        : prevStars.filter((star) => star !== starRating)
+    );
+  };
 
-    )
-  }
+  const handelHotelTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const hotelType = event.target.value;
+    setSelectedHotelsTypes((prevHotelTypes) =>
+      event.target.checked
+        ? [...prevHotelTypes, hotelType]
+        : prevHotelTypes.filter((hotelTypeNew) => hotelTypeNew !== hotelType)
+    );
+  };
+  
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
@@ -41,7 +53,14 @@ const Search = () => {
           <h3 className="text-lg font-semibol border-b border-slate-300 pb-5">
             Filter by:
           </h3>
-          <StarRatingFilter selectedStars={selectedStars} onChange={handelStarChange} />
+          <StarRatingFilter
+            selectedStars={selectedStars}
+            onChange={handelStarsChange}
+          />
+          <HotelTypesFilter
+            selectedHotelTypes={selectedHotelTypes}
+            onChange={handelHotelTypeChange}
+          />
         </div>
       </div>
       <div className="flex flex-col gap-5">
