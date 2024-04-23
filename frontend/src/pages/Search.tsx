@@ -6,12 +6,14 @@ import SearchResultsCard from "../components/SearchResultsCard";
 import Pagination from "../components/Pagination";
 import StarRatingFilter from "../components/StarRatingFilter";
 import HotelTypesFilter from "../components/HotelTypesFilter";
+import FacilitiesFilter from "../components/FacilitiesFilter";
 
 const Search = () => {
   const search = useSearchContext();
   const [page, setPage] = useState<number>(1);
   const [selectedStars, setSelectedStars] = useState<string[]>([]);
   const [selectedHotelTypes, setSelectedHotelsTypes] = useState<string[]>([]);
+  const [selectedHotelFacilities, setSelectedHotelFacilities] = useState<string[]>([])
 
   const searchParams = {
     destination: search.destination,
@@ -22,6 +24,7 @@ const Search = () => {
     page: page.toString(),
     stars: selectedStars,
     types: selectedHotelTypes,
+    facilities: selectedHotelFacilities,
   };
   const { data: hotelData } = useQuery(["searchHotels", searchParams], () =>
     apiClient.searchHotels(searchParams)
@@ -44,6 +47,16 @@ const Search = () => {
         : prevHotelTypes.filter((hotelTypeNew) => hotelTypeNew !== hotelType)
     );
   };
+
+  const handelHotelFacilitiesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const hotelFacilities = event.target.value;
+    setSelectedHotelFacilities((prevHotelFacilities)=> 
+    event.target.checked
+  ? [...prevHotelFacilities, hotelFacilities]
+  : prevHotelFacilities.filter((hotelfacility) => hotelfacility !== hotelFacilities)
+
+)
+  }
   
 
   return (
@@ -61,6 +74,9 @@ const Search = () => {
             selectedHotelTypes={selectedHotelTypes}
             onChange={handelHotelTypeChange}
           />
+          <FacilitiesFilter
+          selectedHotelFacilities={selectedHotelFacilities}
+          onChange={handelHotelFacilitiesChange}/>
         </div>
       </div>
       <div className="flex flex-col gap-5">
