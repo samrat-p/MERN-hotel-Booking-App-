@@ -76,7 +76,7 @@ const constructSearchQuery = (queryParams: any) => {
   }
   if (queryParams.types) {
     constructedQuery.type = {
-      $in: Array.isArray(queryParams.type)
+      $in: Array.isArray(queryParams.types)
         ? queryParams.types
         : [queryParams.types],
     };
