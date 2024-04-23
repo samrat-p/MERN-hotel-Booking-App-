@@ -2,23 +2,22 @@ import express, { Request, Response, query } from "express";
 import Hotel from "../models/hotel";
 import { HotelSearchResponse } from "../shared/types";
 
-
 const router = express.Router();
 // /api/hotels/search?
 router.get("/search", async (req: Request, res: Response) => {
   try {
     const query = constructSearchQuery(req.query);
-    let sortOptions = {} //sortoptions
-    switch(req.query.sortOption) {
+    let sortOptions = {}; //sortoptions
+    switch (req.query.sortOption) {
       case "starRating":
-        sortOptions = {starRating: - 1 };
+        sortOptions = { starRating: -1 };
         break;
       case "pricePerNightAsc":
-        sortOptions = {pricePerNight: 1}
+        sortOptions = { pricePerNight: 1 };
         break;
       case "pricePerNightDesc":
-        sortOptions = {pricePerNight: -1}
-        break
+        sortOptions = { pricePerNight: -1 };
+        break;
     }
     const pageSize = 5;
     const pageNumber = parseInt(
@@ -26,7 +25,10 @@ router.get("/search", async (req: Request, res: Response) => {
     );
     const skip = (pageNumber - 1) * pageSize;
 
-    const hotels = await Hotel.find(query).skip(skip).limit(pageSize);
+    const hotels = await Hotel.find(query)
+      .sort(sortOptions)
+      .skip(skip)
+      .limit(pageSize);
     const total = await Hotel.countDocuments();
     const response: HotelSearchResponse = {
       data: hotels,
