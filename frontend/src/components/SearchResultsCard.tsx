@@ -25,7 +25,10 @@ const SearchResultsCard = ({ hotel }: Props) => {
             </span>
             <span className="ml-1 text-sm gap-1">{hotel.type}</span>
           </div>
-          <Link to={`/detali/${hotel._id}`} className="text-2xl font-bold cursor-pointer pt-3">
+          <Link
+            to={`/detali/${hotel._id}`}
+            className="text-2xl font-bold cursor-pointer pt-3"
+          >
             {hotel.name}
           </Link>
         </div>
@@ -49,7 +52,10 @@ const SearchResultsCard = ({ hotel }: Props) => {
 
           <div className="flex flex-col items-end gap-1">
             <span className="font-bold">${hotel.pricePerNight} Per night</span>
-            <Link to={`/detail/${hotel._id}`} className="bg-blue-600 text-white h-full p-2 text-xl font-bold max-w-fit hover:bg-blue-400">
+            <Link
+              to={`/detail/${hotel._id}`}
+              className="bg-blue-600 text-white h-full p-2 text-xl font-bold max-w-fit hover:bg-blue-400"
+            >
               View More
             </Link>
           </div>
