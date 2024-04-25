@@ -7,6 +7,7 @@ import Pagination from "../components/Pagination";
 import StarRatingFilter from "../components/StarRatingFilter";
 import HotelTypesFilter from "../components/HotelTypesFilter";
 import FacilitiesFilter from "../components/FacilitiesFilter";
+import PriceFilter from "../components/PriceFilter";
 
 const Search = () => {
   const search = useSearchContext();
@@ -14,6 +15,7 @@ const Search = () => {
   const [selectedStars, setSelectedStars] = useState<string[]>([]);
   const [selectedHotelTypes, setSelectedHotelsTypes] = useState<string[]>([]);
   const [selectedHotelFacilities, setSelectedHotelFacilities] = useState<string[]>([])
+  const [selectedPrice, setSelectedPrice] = useState<number | undefined>();
 
   const searchParams = {
     destination: search.destination,
@@ -25,6 +27,7 @@ const Search = () => {
     stars: selectedStars,
     types: selectedHotelTypes,
     facilities: selectedHotelFacilities,
+    maxPrice: selectedPrice?.toString()
   };
   const { data: hotelData } = useQuery(["searchHotels", searchParams], () =>
     apiClient.searchHotels(searchParams)
@@ -77,6 +80,10 @@ const Search = () => {
           <FacilitiesFilter
           selectedHotelFacilities={selectedHotelFacilities}
           onChange={handelHotelFacilitiesChange}/>
+          <PriceFilter
+          selectedPrice={selectedPrice}
+          onChange={(value?:number)=> setSelectedPrice(value)}
+          />
         </div>
       </div>
       <div className="flex flex-col gap-5">
