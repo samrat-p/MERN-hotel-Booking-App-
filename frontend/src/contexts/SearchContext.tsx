@@ -38,9 +38,7 @@ export const SearchContextProvider = ({
   const [adultCount, setAdultCount] = useState<number>(() =>
     parseInt(sessionStorage.getItem("adultCount") || "1")
   );
-  const [childCount, setChildCount] = useState<number>(() =>
-    parseInt(sessionStorage.getItem("childCount") || "1")
-  );
+  const [childCount, setChildCount] = useState<number>(0)
   const [hotelId, setHotelId] = useState<string>(
     () => sessionStorage.getItem("hotelID") || ""
   ); //see the method this is for fetching the data (getitem)
