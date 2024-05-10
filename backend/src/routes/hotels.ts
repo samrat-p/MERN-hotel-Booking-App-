@@ -2,6 +2,10 @@ import express, { Request, Response } from "express";
 import Hotel from "../models/hotel";
 import { HotelSearchResponse } from "../shared/types";
 import { param, validationResult } from "express-validator";
+import Stripe from "stripe";
+import verifyToken from "../middleware/auth";
+
+const stripe = new Stripe(process.env.STRIPE_API_KEY as string); //intializing stripe
 
 const router = express.Router();
 //api/hotels/59719444{the number shows hotel id}
@@ -66,6 +70,36 @@ router.get(
       console.log(error);
       res.status(500).json({ message: "error fetching hotels" });
     }
+  }
+);
+
+router.post(
+  "/:hotelId/bookings/payment-intent",
+  verifyToken,
+  async (req: Request, res: Response) => {
+    //3 points to remember
+    //totalCost of the hotels related to total number of staying nights
+    const { numberOfNights } = req.body; // to get the totalnumberofnights
+    const hotelId = req.params.hotelId; //get the hotelId
+    const hotel = await Hotel.findById(hotelId);
+    if (!hotel) {
+      return res
+        .status(400)
+        .json({ message: "Hotel is not found !! Fatal Error" });
+    }
+    const totalCost = hotel.pricePerNight * numberOfNights;
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: totalCost,
+      currency: "inr",
+      metadata: {
+        hotelId,
+        userId: req.userId,
+      }
+
+    })
+
+    //hotelId which hotel is booking for purchase
+    //userId of the user
   }
 );
 
