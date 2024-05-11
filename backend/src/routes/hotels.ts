@@ -79,6 +79,8 @@ router.post(
   async (req: Request, res: Response) => {
     //3 points to remember
     //totalCost of the hotels related to total number of staying nights
+    //hotelId which hotel is booking for purchase
+    //userId of the user
     const { numberOfNights } = req.body; // to get the totalnumberofnights
     const hotelId = req.params.hotelId; //get the hotelId
     const hotel = await Hotel.findById(hotelId);
@@ -94,22 +96,18 @@ router.post(
       metadata: {
         hotelId,
         userId: req.userId,
-      }
+      },
+    });
+    if (!paymentIntent.client_secret) {
+      return res.status(500).json({ message: "Error creating payment intent" });
+    }
 
-    })
-if(!paymentIntent.client_secret){
-  return res.status(500).json({message:"Error creating payment intent"})
-}
-
-const response = {
-  paymentIntentId: paymentIntent.id,
-  clientSecret: paymentIntent.client_secret.toString(),
-  totalCost,
-}
-res.send(response)
-
-    //hotelId which hotel is booking for purchase
-    //userId of the user
+    const response = {
+      paymentIntentId: paymentIntent.id,
+      clientSecret: paymentIntent.client_secret.toString(),
+      totalCost,
+    };
+    res.send(response);
   }
 );
 
