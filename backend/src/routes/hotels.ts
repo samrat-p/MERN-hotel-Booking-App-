@@ -97,6 +97,16 @@ router.post(
       }
 
     })
+if(!paymentIntent.client_secret){
+  return res.status(500).json({message:"Error creating payment intent"})
+}
+
+const response = {
+  paymentIntentId: paymentIntent.id,
+  clientSecret: paymentIntent.client_secret.toString(),
+  totalCost,
+}
+res.send(response)
 
     //hotelId which hotel is booking for purchase
     //userId of the user
