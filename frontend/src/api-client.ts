@@ -1,6 +1,6 @@
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
-import { HotelSearchResponse, HotelType, UserType } from "../../backend/src/shared/types";
+import { HotelSearchResponse, HotelType, UserType, paymentIntentResponse } from "../../backend/src/shared/types";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 export const register = async (formData: RegisterFormData) => {
@@ -167,7 +167,7 @@ export const fetchCurrrentUser = async (): Promise<UserType> => {
 export const createPaymentIntent = async (
   hotelId: string,
   numberOfNights: string
-) => {
+):Promise<paymentIntentResponse> => {
   const response = await fetch (`${API_BASE_URL}/api/hotels/${hotelId}/bookings/payment-intent`, {
     credentials: "include",
     method: "POST",
