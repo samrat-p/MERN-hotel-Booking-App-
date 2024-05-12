@@ -5,8 +5,11 @@ import { useSearchContext } from "../contexts/SearchContext";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import BookingDetailSummary from "../components/BookingDetailSummary";
+import { useAppContext } from "../contexts/AppContext";
+import { Elements } from "@stripe/react-stripe-js";
 
 const Booking = () => {
+  const {stripePromise} = useAppContext()
   const search = useSearchContext();
   const { hotelId } = useParams();
   const [numberOfNights, setNumberOfNights] = useState<number>(0);
@@ -18,6 +21,13 @@ const Booking = () => {
       setNumberOfNights(Math.ceil(nights));
     }
   }, [search.checkIn, search.checkOut]);
+
+const {data:paymentIntentData} = useQuery("createPaymentIntent", () => apiClient.createPaymentIntent(hotelId as string,
+  numberOfNights.toString()
+), 
+{
+  enabled: !!hotelId && numberOfNights > 0,
+})
 
   const { data: hotel } = useQuery(
     "fetchHotelByID",
@@ -45,7 +55,15 @@ if(!hotel) {
         numberOfNights={numberOfNights}
         hotel={hotel}
       />
-      {currentUser && <BookingForm currentUser={currentUser} />}
+      {currentUser && paymentIntentData && (
+        <Elements stripe= {stripePromise} options={{
+          clientSecret : paymentIntentData.clientSecret,
+        }}>
+          <BookingForm currentUser={currentUser} />
+        </Elements>
+
+      
+      )}
     </div>
   );
 }; //currentUser && means it will only display if we have a currentUser
