@@ -58,8 +58,9 @@ if(!hotel) {
       {currentUser && paymentIntentData && (
         <Elements stripe= {stripePromise} options={{
           clientSecret : paymentIntentData.clientSecret,
-        }}>
-          <BookingForm currentUser={currentUser} />
+        }}
+        >
+          <BookingForm currentUser={currentUser} paymentIntent = {paymentIntentData} />
         </Elements>
 
       
