@@ -11,11 +11,17 @@ type Props = {
   paymentIntent: paymentIntentResponse;
 };
 
-type BookingFormData = {
+export type BookingFormData = {
   firstName: string;
   lastName: string;
   email: string;
-};
+  adultCount: number;
+  childCount: number;
+  checkIn: string;
+  checkOut: string;
+  hotelId: string;
+  paymentIntentId: string
+};  //updated types for save booking data api
 
 const BookingForm = ({ currentUser, paymentIntent }: Props) => {
   const stripe = useStripe();
