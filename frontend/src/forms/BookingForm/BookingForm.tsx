@@ -5,6 +5,11 @@ import {
 } from "../../../../backend/src/shared/types";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { StripeCardElement } from "@stripe/stripe-js";
+import { useSearchContext } from "../../contexts/SearchContext";
+import { useParams } from "react-router-dom";
+import { useMutation } from "react-query";
+import * as apiClient from "../../api-client"
+import { useAppContext } from "../../contexts/AppContext";
 
 type Props = {
   currentUser: UserType;
@@ -20,21 +25,46 @@ export type BookingFormData = {
   checkIn: string;
   checkOut: string;
   hotelId: string;
-  paymentIntentId: string
+  paymentIntentId: string;
+  totalCost: number;
 };  //updated types for save booking data api
 
 const BookingForm = ({ currentUser, paymentIntent }: Props) => {
   const stripe = useStripe();
   const elements = useElements()
+  const search = useSearchContext()
+  const {hotelId} = useParams()
+  const {showToast} = useAppContext()
+
+  const {mutate: bookRoom,isLoading} = useMutation(apiClient.createRoomBooking, { 
+    onSuccess: () => {
+      //toast messages
+      showToast({message:"Booking Saved!", type:"SUCCESS"})
+    }, 
+    onError: () => {
+      // toast messages for errors
+      showToast({message:"Error saving booking!", type:"ERROR"})
+    }
+  })
+
+
+
   const { handleSubmit, register } = useForm<BookingFormData>({
     defaultValues: {
       firstName: currentUser.firstName,
       lastName: currentUser.lastName,
       email: currentUser.email,
+      adultCount: search.adultCount,
+      childCount: search.childCount,
+      checkIn: search.checkIn.toISOString(),
+      checkOut: search.checkOut.toISOString(),
+      hotelId: hotelId,
+      totalCost: paymentIntent.totalCost,
+      paymentIntentId: paymentIntent.paymentIntentId,
     },
   });
 
-  const onSubmit = async (formdata: BookingFormData) => {
+  const onSubmit = async (formData: BookingFormData) => {
     if (!stripe || !elements) {
       return;
     }
@@ -45,11 +75,14 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
     });
     if(result.paymentIntent?.status == "succeeded"){
       //book the room
+      bookRoom({...formData, paymentIntentId: result.paymentIntent.id})
     }
   };
 
   return (
-    <form className="grid grid-cols-1 gap-5 px-5 py-5 border rounded border-slate-300">
+    <form 
+      onSubmit={handleSubmit(onSubmit)}
+    className="grid grid-cols-1 gap-5 px-5 py-5 border rounded border-slate-300">
       <span className="text-3xl font-bold">Confirmed Your Details</span>
       <div className="grid grid-cols-2 gap-4">
         <label className="text-gray-700 text-sm font-bold flex-1">
@@ -101,6 +134,16 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
           className="border rounded-md p-2 text-sm"
         ></CardElement>
       </div>
+
+      <div className="flex justify-end">
+        <button
+        disabled={isLoading}
+        type="submit" className="bg-blue-500 text-white p-2 font-bold hover:bg-blue-200 text-md disabled::bg-grey-500">
+          {isLoading ? "Saving ..." : "Confirm Booking"}
+         
+        </button>
+      </div>
+
     </form>
   );
 };
