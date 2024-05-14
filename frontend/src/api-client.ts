@@ -168,22 +168,27 @@ export const fetchCurrrentUser = async (): Promise<UserType> => {
 export const createPaymentIntent = async (
   hotelId: string,
   numberOfNights: string
-):Promise<paymentIntentResponse> => {
-  const response = await fetch (`${API_BASE_URL}/api/hotels/${hotelId}/bookings/payment-intent`, {
-    credentials: "include",
-    method: "POST",
-    body: JSON.stringify({numberOfNights}),
-    headers: {
-      "Content-Type": "application/json"
-    },
-  })
-  if(!response.ok){
-    throw new Error("Error fetching payment intent")
-  }
-  return response.json()
-}
+): Promise<paymentIntentResponse> => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/hotels/${hotelId}/bookings/payment-intent`,
+    {
+      credentials: "include",
+      method: "POST",
+      body: JSON.stringify({ numberOfNights }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
-export const createBooking = async (formData:BookingFormData) => {
+  if (!response.ok) {
+    throw new Error("Error fetching payment intent");
+  }
+
+  return response.json();
+};
+
+export const createRoomBooking = async (formData:BookingFormData) => {
   const response = await fetch (`${API_BASE_URL}/api/hotels/${formData.hotelId}/bookings` , {
     method: "POST",
     headers: {
