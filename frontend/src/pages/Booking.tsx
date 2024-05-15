@@ -43,7 +43,7 @@ const {data:paymentIntentData} = useQuery("createPaymentIntent", () => apiClient
   );
   //console.log(currentUser?.email)
 if(!hotel) {
-  return <>Error PLS</>
+  return <></>
 }
   return (
     <div className="grid md:grid-cols-[1fr_2fr]">
@@ -56,14 +56,17 @@ if(!hotel) {
         hotel={hotel}
       />
       {currentUser && paymentIntentData && (
-        <Elements stripe= {stripePromise} options={{
+        <Elements 
+        stripe= {stripePromise} 
+        options={{
           clientSecret : paymentIntentData.clientSecret,
         }}
         >
-          <BookingForm currentUser={currentUser} paymentIntent = {paymentIntentData} />
+          <BookingForm 
+            currentUser={currentUser} 
+            paymentIntent = {paymentIntentData} 
+          />
         </Elements>
-
-      
       )}
     </div>
   );
