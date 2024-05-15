@@ -4,7 +4,6 @@ import { BookingType, HotelSearchResponse } from "../shared/types";
 import { param, validationResult } from "express-validator";
 import Stripe from "stripe";
 import verifyToken from "../middleware/auth";
-import { SrvRecord } from "dns";
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY as string); //intializing stripe
 
