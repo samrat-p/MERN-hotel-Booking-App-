@@ -36,7 +36,7 @@ router.get("/search", async (req: Request, res: Response) => {
       .sort(sortOptions)
       .skip(skip)
       .limit(pageSize);
-    const total = await Hotel.countDocuments();
+    const total = await Hotel.countDocuments(query);
     const response: HotelSearchResponse = {
       data: hotels,
       pagination: {
@@ -127,7 +127,7 @@ router.post(
 
       if (
         paymentIntent.metadata.hotelId !== req.params.hotelId ||
-        paymentIntent.metadata.userId !== req.params.userId
+        paymentIntent.metadata.userId !== req.userId
       ) {
         return res.status(400).json({ message: "Payment intent mismatch " });
       }
