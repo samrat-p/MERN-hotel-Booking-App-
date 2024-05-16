@@ -1,9 +1,9 @@
 export type UserType = {
-  _id: "string";
-  email: "string";
-  password: "string";
-  firstName: "string";
-  lastName: "string";
+  _id: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
 };
 
 export type HotelType = {
@@ -33,7 +33,7 @@ export type HotelSearchResponse = {
   };
 };
 
-export type paymentIntentResponse = {
+export type PaymentIntentResponse = {
   paymentIntentId: string;
   clientSecret: string;
   totalCost: number;
