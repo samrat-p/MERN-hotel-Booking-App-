@@ -39,10 +39,10 @@ const {data:paymentIntentData} = useQuery("createPaymentIntent", () => apiClient
 
   const { data: currentUser } = useQuery(
     "fetchCurrentUser",
-    apiClient.fetchCurrrentUser
+    apiClient.fetchCurrentUser
   );
   //console.log(currentUser?.email)
-if(!hotel) {
+if (!hotel) {
   return <></>
 }
   return (
