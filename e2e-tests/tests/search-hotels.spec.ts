@@ -44,8 +44,21 @@ test("should book hotel", async ({page}) => {
   await page.getByText("British Grand Prix").click()
   await page.getByRole("button",{name:"Book now"}).click();
 
-  await expect(page.getByText("Total Cost: $500.00"))
+  await expect(page.getByText("Total Cost: $500.00")).toBeVisible()
+  
   //await expect(page).toHaveURL(/detail/);
   //await expect(page.getByRole("button",{name:"Book now"})).toBeVisible();
 
+
+  //filling the Stripe-frame
+  const stripeFrame = page.frameLocator("iframe").first()
+  await stripeFrame
+  .locator('[Placeholder="Card number"]')
+  .fill("4242424242424242")
+  await stripeFrame.locator('[placeholder="MM / YY"]').fill("04/30")
+  await stripeFrame.locator('[placeholder="CVC"]').fill("242")
+  await stripeFrame.locator('[placeholder="ZIP"]').fill("24225")
+
+  await page.getByRole("button", {name:"Confirm Booking"}).click()
+  await expect(page.getByText("Booking Saved!")).toBeVisible()
 })
