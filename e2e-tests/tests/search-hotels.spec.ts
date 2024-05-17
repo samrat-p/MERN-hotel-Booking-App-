@@ -30,3 +30,22 @@ test("should show hotel detalis", async({page}) => {
   await expect(page).toHaveURL(/detail/);
   await expect(page.getByRole("button",{name:"Book now"})).toBeVisible()
 })
+
+test("should book hotel", async ({page}) => {
+  await page.goto(UI_URL)
+  await page.getByPlaceholder("Where are you going mate!").fill("uk")
+
+  const date = new Date()
+    date.setDate(date.getDate()+3)
+    const formattedDate = date.toISOString().split("T")[0]
+  await page.getByPlaceholder("Check-out Date").fill(formattedDate)
+  
+  await page.getByRole("button", {name: "Search"}).click()
+  await page.getByText("British Grand Prix").click()
+  await page.getByRole("button",{name:"Book now"}).click();
+
+  await expect(page.getByText("Total Cost: $500.00"))
+  //await expect(page).toHaveURL(/detail/);
+  //await expect(page.getByRole("button",{name:"Book now"})).toBeVisible();
+
+})
