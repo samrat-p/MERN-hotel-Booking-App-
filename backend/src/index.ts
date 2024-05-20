@@ -9,6 +9,7 @@ import path from "path";
 import { v2 as cloudinary } from "cloudinary";
 import myHotelRoutes from "./routes/my-hotels";
 import hotelRoutes from "./routes/hotels";
+import bookingRoutes from "./routes/my-bookings"
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -35,6 +36,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/my-hotels", myHotelRoutes); //deals with logged in user manage their own hotels
 app.use("/api/hotels", hotelRoutes); //deals with endpoint for visitor to search , view hotels ...like that !
+app.use("/api/my-bookings", bookingRoutes )
 
 //app.get("/api/test", async (req: Request, res: Response) => {
 //res.json({ message: " well i did the testing thing correctly" });
