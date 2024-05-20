@@ -34,23 +34,23 @@ This project is a full-stack web application for hotel booking, built using the 
     npm install
 3. Set up environment variables:
 - Create a .env file in the backend directory and add the necessary configurations (e.g., MongoDB URI, JWT secret).
-### Run the Application
+## Run the Application
 1. In the backend directory:
     ```bash
     npm start
 2. In the frontend directory:
     ```bash
     npm start
-### Usage
+## Usage
 - Open your browser and go to http://localhost:3000 to see the frontend.
 - The backend runs on http://localhost:5000.
-### Contributing
+## Contributing
 1. Fork the repository.
 2. Create a new branch (git checkout -b feature/YourFeature).
 3. Commit your changes (git commit -am 'Add some feature').
 4. Push to the branch (git push origin feature/YourFeature).
 5. Open a pull request.
-### License
+## License
 This project is licensed under the MIT License.
-### Contact
+## Contact
 For any inquiries, you can contact the project maintainer via the GitHub repository.
