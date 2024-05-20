@@ -8,6 +8,7 @@ This project is a full-stack web application for hotel booking, built using the 
 - **Hotel Management:** Create, read, update, and delete hotel details.
 - **Booking Management:** Users can book hotels, and admins can manage bookings.
 - **Search and Filter:** Search for hotels based on various criteria.
+- **Payment Integration:** Secure payments using Stripe.
 
 ## Folder Structure
 - **backend:** Contains the server-side code, including routes, controllers, models, and configuration files.
@@ -18,6 +19,7 @@ This project is a full-stack web application for hotel booking, built using the 
 - **Frontend:** React, Redux, Bootstrap
 - **Backend:** Node.js, Express.js, MongoDB, Mongoose
 - **Authentication:** JWT
+- **Payments:** Stripe
 - **Testing:** Jest, Cypress
 
 ## Installation
