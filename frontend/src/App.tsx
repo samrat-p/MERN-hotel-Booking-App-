@@ -14,7 +14,7 @@ import EditHotel from "./pages/EditHotel";
 import Search from "./pages/Search";
 import Detail from "./pages/Detali";
 import Booking from "./pages/Booking";
-import MyBookings from "./pages/Mybookings";
+import MyBookings from "./pages/MyBookings";
 
 const App = () => {
   const { isLoggedIn } = useAppContext();
